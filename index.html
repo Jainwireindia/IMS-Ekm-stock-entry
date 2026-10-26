@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="en" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Office &amp; 5th Godown IMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#BEDEFF;--card:#fff;--ink:#2a1219;--mut:#6b5058;--pri:#930031;--priInk:#fff;--acc:#FFA500;--accInk:#2a1700;--note:#FFF2A7;--noteInk:#4a3a00;--line:#e3d3d8;--side:#930031;--sideInk:#fff;--grid:rgba(147,0,49,.07);
+--ok:#1d4e89;--okBg:#e3effc;--warn:#8a4b00;--warnBg:#ffe9c4;--bad:#930031;--badBg:#fbdde6;--inp:#fff}
+@media(prefers-color-scheme:dark){html[data-theme=auto]{--bg:#140a0e;--card:#211217;--ink:#f6ecee;--mut:#b99fa7;--pri:#c4204f;--side:#2b0714;--line:#3a2229;--note:#3d3500;--noteInk:#ffefa0;--grid:rgba(255,165,0,.06);--ok:#8cc4ff;--okBg:#12263d;--warn:#ffb347;--warnBg:#3d2a07;--bad:#ff8aa8;--badBg:#3d1020;--inp:#2a181e}}
+html[data-theme=dark]{--bg:#140a0e;--card:#211217;--ink:#f6ecee;--mut:#b99fa7;--pri:#c4204f;--side:#2b0714;--line:#3a2229;--note:#3d3500;--noteInk:#ffefa0;--grid:rgba(255,165,0,.06);--ok:#8cc4ff;--okBg:#12263d;--warn:#ffb347;--warnBg:#3d2a07;--bad:#ff8aa8;--badBg:#3d1020;--inp:#2a181e}
+*{box-sizing:border-box}
+body{margin:0;font-variant-ligatures:none;font-feature-settings:'calt' 0,'liga' 0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:14.5px;font-weight:500;color:var(--ink);background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:30px 30px}
+h1{font-size:28px;font-weight:800;margin:0 0 4px}h2{font-size:17px;font-weight:800;margin:0 0 10px}
+.muted{color:var(--mut)}.small{font-size:12.5px}.right{margin-left:auto}.nowrap{white-space:nowrap}
+#app{display:flex;min-height:100vh}
+#side{width:228px;background:var(--side);color:var(--sideInk);padding:16px 12px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px;flex-shrink:0}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;margin-bottom:14px}
+.logo i{width:34px;height:34px;border-radius:9px;background:var(--acc);display:block;background-image:linear-gradient(#930031 2px,transparent 2px),linear-gradient(90deg,#930031 2px,transparent 2px);background-size:9px 9px}
+.nav{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;color:inherit;background:none;border:0;font:inherit;font-weight:700;cursor:pointer;text-align:left;width:100%;border-left:4px solid transparent}
+.nav:hover{background:rgba(255,255,255,.1)}.nav.on{background:rgba(255,255,255,.16);border-left-color:var(--acc)}
+.nav .bd{margin-left:auto;background:var(--acc);color:var(--accInk);border-radius:20px;padding:1px 8px;font-size:12px;font-weight:800}
+#side .foot{margin-top:auto;font-size:12px;opacity:.8}
+#main{flex:1;min-width:0;padding:22px 26px 60px;max-width:1180px}
+.top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-bottom:14px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;border-top:4px solid var(--pri)}
+.kpi.w{border-top-color:var(--acc)}.kpi b{display:block;font-size:30px;font-weight:800;line-height:1.1}
+.btn{background:var(--pri);color:var(--priInk);border:0;border-radius:10px;padding:9px 16px;font:inherit;font-weight:700;cursor:pointer}
+.btn:hover{filter:brightness(1.1)}.btn.o{background:var(--acc);color:var(--accInk)}.btn.g{background:transparent;color:var(--pri);border:1.5px solid var(--pri)}
+.btn.sm{padding:5px 11px;font-size:13px;border-radius:8px}.btn:disabled{opacity:.45;cursor:default}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--inp);border:1.5px solid var(--line);border-radius:9px;padding:8px 10px;max-width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--acc);border-color:var(--acc)}
+textarea{width:100%;min-height:140px;font-family:ui-monospace,Consolas,monospace;font-size:13px}
+input.w1{width:96px}input.w2{width:150px}input.wf{width:100%}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.chip{white-space:nowrap;display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:2px 10px;font-size:12.5px;font-weight:700;background:var(--okBg);color:var(--ok)}
+.chip.warn{background:var(--warnBg);color:var(--warn)}.chip.bad{background:var(--badBg);color:var(--bad)}.chip.n{background:var(--line);color:var(--mut)}
+.note{background:var(--note);color:var(--noteInk);border-radius:10px;padding:10px 12px;margin:8px 0;font-size:13.5px}
+table{border-collapse:collapse;width:100%}th{position:sticky;top:0;background:var(--card);text-align:left;font-size:12.5px;color:var(--mut);padding:8px;border-bottom:2px solid var(--line)}
+td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:middle}tr.sel td{background:var(--note)}
+.tw{overflow:auto;max-height:68vh}
+.ord .ohead{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.ln{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 0;border-top:1px solid var(--line)}
+.ln .nm{flex:1;min-width:200px;font-weight:700}
+.ln.done .nm{color:var(--mut);text-decoration:line-through}
+.panel{background:var(--okBg);border-radius:10px;padding:10px;margin:4px 0 8px;width:100%}
+.ev{font-size:12.5px;color:var(--mut);width:100%;padding-left:6px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.tab{border:1.5px solid var(--pri);color:var(--pri);background:transparent;border-radius:20px;padding:5px 14px;font:inherit;font-weight:700;cursor:pointer}
+.tab.on{background:var(--pri);color:var(--priInk)}
+#toast{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;z-index:50}
+.t{background:var(--ink);color:var(--card);padding:10px 14px;border-radius:10px;max-width:340px;font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.t.bad{background:var(--bad);color:#fff}.t.warn{background:var(--acc);color:var(--accInk)}
+pre.rep{background:var(--inp);border:1px solid var(--line);border-radius:10px;padding:10px;max-height:300px;overflow:auto;font-size:12px;white-space:pre-wrap}
+.login{max-width:380px;margin:12vh auto;text-align:center}.login .card{padding:26px}
+@media(max-width:820px){#app{flex-direction:column}#side{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap;padding:8px}.logo{margin:0 8px 0 0}.nav{width:auto;padding:7px 10px}#side .foot{display:none}#main{padding:14px 12px 50px}h1{font-size:23px}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast"></div>
+<datalist id="itemlist"></datalist>
+<datalist id="catlist"></datalist>
+<datalist id="partylist"></datalist>
+<script>
+// ===== PASTE YOUR APPS SCRIPT WEB APP URL ON THE NEXT LINE (Deploy -> Manage deployments -> Web app URL) =====
+const API_URL = "https://script.google.com/macros/s/AKfycbxGi8zR-S9UwkWduIYtGpHthmT1a8AUROB_IqCXIVK76HfkNJdIUPsourevS6FMNuXo9g/exec";
+// ===== end =====
+const VERSION = "1.0.2";
+const GODOWNS = ["Office", "5th Godown"];
+const UNITS = ["", "pcs", "kg", "roll", "bundle", "bag"];
+
+/* ---------------- helpers ---------------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const ls = { get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+const p2 = n => String(n).padStart(2, '0');
+const fmt = n => (n == null || n === '' || isNaN(n)) ? '' : String(Number(Number(n).toFixed(3)));
+const today = () => { const d = new Date(); return p2(d.getDate()) + '-' + p2(d.getMonth() + 1) + '-' + d.getFullYear(); };
+const nowStamp = () => { const d = new Date(); return today() + ' ' + p2(d.getHours()) + ':' + p2(d.getMinutes()); };
+function parseDMY(s) {
+  const m = String(s || '').trim().match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{2,4})$/); if (!m) return null;
+  let y = +m[3]; if (y < 100) y += 2000; const d = +m[1], mo = +m[2];
+  if (mo < 1 || mo > 12 || d < 1 || d > 31) return null;
+  return p2(d) + '-' + p2(mo) + '-' + y;
+}
+const dkey = s => { const m = String(s || '').match(/^(\d{2})-(\d{2})-(\d{4})/); return m ? +(m[3] + m[2] + m[1]) : 0; };
+function tsFrom(date, time) {
+  const d = parseDMY(date); if (!d) return 0;
+  const tm = String(time || '').match(/(\d{1,2})[:.](\d{2})(?::\d{2})?\s*([ap]m)?/i);
+  let h = tm ? +tm[1] : 12, mi = tm ? +tm[2] : 0;
+  if (tm && tm[3]) { const pm = /pm/i.test(tm[3]); if (pm && h < 12) h += 12; if (!pm && h === 12) h = 0; }
+  const [dd, mm, yy] = d.split('-').map(Number);
+  return new Date(yy, mm - 1, dd, h, mi).getTime();
+}
+function maskDate(el) {
+  let v = el.value.replace(/\D/g, '').slice(0, 8), o = v.slice(0, 2);
+  if (v.length > 2) o += '-' + v.slice(2, 4); if (v.length > 4) o += '-' + v.slice(4);
+  el.value = o;
+}
+const rid = n => Math.random().toString(36).slice(2, 2 + n);
+const newOp = () => 'x' + Date.now().toString(36) + rid(2);
+const nk = s => String(s || '').toLowerCase().replace(/[×✕*]/g, 'x').replace(/\s+/g, '').replace(/[^a-z0-9./x+\-]/g, '');
+function toks(s) {
+  s = String(s).toLowerCase().replace(/[×✕*]/g, 'x'); const out = [];
+  s.split(/[^a-z0-9./]+/).filter(Boolean).forEach(t => { if (/\d/.test(t) && /x/.test(t)) t.split('x').filter(Boolean).forEach(p => out.push(p)); else out.push(t); });
+  return out;
+}
+function normUnit(u) {
+  u = String(u || '').toLowerCase();
+  if (/^kg/.test(u)) return 'kg'; if (/^(pic|pcs?|pc$|nos?$|pls|piece|sheet)/.test(u)) return 'pcs';
+  if (/^roll/.test(u)) return 'roll'; if (/^(bundle|bdl)/.test(u)) return 'bundle'; if (/^bag/.test(u)) return 'bag'; return '';
+}
+function hashStr(s) { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return String(h); }
+function toast(msg, kind) {
+  const t = document.createElement('div'); t.className = 't ' + (kind || ''); t.textContent = msg; $('#toast').appendChild(t);
+  setTimeout(() => t.remove(), kind === 'bad' ? 7000 : 3800);
+}
+
+/* ---------------- state ---------------- */
+const S = {
+  items: [], byKey: {}, rows: [], stock: {}, moves: {}, orders: [], aliases: [], aliasMap: {}, cuts: [], prod: [], cats: [],
+  types: { in: [], out: [] }, view: 'dash', by: ls.get('o5_by', ''), key: ls.get('o5_key', ''), theme: ls.get('o5_theme', 'auto'),
+  outbox: ls.get('o5_outbox', []), syncedAt: 0, loaded: false, busy: false, err: '', draft: {}, prev: {}, ui: {},
+  ordTab: 'wait', ordQ: '', stockQ: '', stockGo: '', stockSt: '', syncLog: [], cfg: ls.get('o5_cfg', { waitHrs: 3, lateHrs: 8 })
+};
+
+/* ---------------- api + outbox ---------------- */
+async function api(action, body) {
+  const t0 = performance.now(); let ok = false, err = '';
+  try {
+    if (!API_URL || API_URL.indexOf('PASTE_') === 0) throw new Error('API_URL not set in index.html');
+    const r = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ action, key: S.key }, body || {})) });
+    const j = await r.json();
+    if (!j.ok) { err = j.error || 'error'; throw new Error(err); }
+    ok = true; return j;
+  } catch (e) { err = err || String(e.message || e); if (err === 'auth') { S.key = ''; ls.set('o5_key', ''); } throw new Error(err); }
+  finally { S.syncLog.unshift({ t: nowStamp(), a: action, ms: Math.round(performance.now() - t0), ok, err }); S.syncLog.length = Math.min(S.syncLog.length, 60); }
+}
+function saveOutbox() { ls.set('o5_outbox', S.outbox); }
+function queue(op) { S.outbox.push(op); saveOutbox(); updateSyncPill(); flush(); }
+let flushing = false, retryT = null;
+async function flush() {
+  if (flushing) return; flushing = true;
+  try {
+    while (S.outbox.length) {
+      const op = S.outbox[0];
+      await api(op.action, op.body);
+      S.outbox.shift(); saveOutbox(); S.err = ''; S.syncedAt = Date.now(); updateSyncPill();
+    }
+  } catch (e) {
+    S.err = e.message; updateSyncPill();
+    if (e.message === 'auth') render(); else { clearTimeout(retryT); retryT = setTimeout(flush, 15000); }
+  } finally { flushing = false; }
+}
+function updateSyncPill() {
+  const el = $('#pill'); if (!el) return;
+  const n = S.outbox.length;
+  el.className = 'chip ' + (n ? 'warn' : (S.err ? 'bad' : ''));
+  el.textContent = n ? '⏳ ' + n + ' waiting to sync' : (S.err ? '⚠ ' + S.err.slice(0, 40) : (S.syncedAt ? '✓ Synced ' + new Date(S.syncedAt).toTimeString().slice(0, 5) : '…'));
+}
+
+/* ---------------- data ---------------- */
+function applyData(j) {
+  S.items = j.items || []; S.rows = (j.rows || []).map(r => ({ s: r[0], d: r[1], ty: r[2], p: r[3], q: r[4], g: r[5], n: r[6], t: r[7] }));
+  S.orders = j.orders || []; S.aliases = j.aliases || []; S.cuts = j.cuts || []; S.prod = j.prod || [];
+  rebuild();
+}
+function rebuild() {
+  S.byKey = {}; S.items.forEach(i => { S.byKey[nk(i.name)] = i; });
+  S.aliasMap = {}; S.aliases.forEach(a => { S.aliasMap[nk(a.a)] = a.i; });
+  S.cats = [...new Set(S.items.map(i => i.cat).filter(Boolean))];
+  const tin = new Set(), tout = new Set(); S.rows.forEach(r => (r.s === 'IN' ? tin : tout).add(r.ty));
+  ['Transfer In', 'Purchase', 'Return', 'Production', 'Stock Correction'].forEach(t => tin.add(t));
+  ['Sale', 'Transfer Out', 'Usage', 'Stock Correction'].forEach(t => tout.add(t));
+  S.types = { in: [...tin].filter(Boolean), out: [...tout].filter(Boolean) };
+  recalc();
+  $('#itemlist').innerHTML = S.items.map(i => '<option value="' + esc(i.name) + '">').join('');
+  $('#catlist').innerHTML = S.cats.map(c => '<option value="' + esc(c) + '">').join('');
+  const parties = new Set(); S.orders.forEach(o => o.party && parties.add(o.party)); S.cuts.forEach(c => c[1] && parties.add(c[1]));
+  $('#partylist').innerHTML = [...parties].map(p => '<option value="' + esc(p) + '">').join('');
+}
+function recalc() {
+  S.stock = {}; S.moves = {};
+  const ord = S.rows.map((r, i) => [r, i]).sort((a, b) => dkey(a[0].d) - dkey(b[0].d) || a[1] - b[1]);
+  ord.forEach(([r]) => {
+    const k = nk(r.p); const delta = r.s === 'IN' ? r.q : -r.q;
+    S.stock[k] = (S.stock[k] || 0) + delta; (S.moves[k] = S.moves[k] || []).push({ r, bal: S.stock[k] });
+  });
+}
+const stockOf = it => S.stock[nk(it.name)] || 0;
+function statusOf(it) {
+  const q = stockOf(it);
+  if (q < 0) return { k: 'neg', t: '⛔ Negative', c: 'bad' };
+  if (q === 0) return { k: 'none', t: '⛔ No stock', c: 'bad' };
+  if (it.low != null && q <= it.low) return { k: 'low', t: '▲ Low stock', c: 'warn' };
+  if (it.high != null && q > it.high) return { k: 'over', t: '◆ Overstock', c: '' };
+  if (it.low == null && it.high == null) return { k: 'nolv', t: '○ Level not set', c: 'n' };
+  return { k: 'ok', t: '✓ In stock', c: '' };
+}
+async function loadAll(quiet) {
+  if (S.busy) return; S.busy = true; if (!quiet) render();
+  try {
+    await flush(); if (S.outbox.length) { S.busy = false; return; }
+    const j = await api('load'); applyData(j); S.loaded = true; S.syncedAt = Date.now(); S.err = '';
+    ls.set('o5_cache', { items: j.items, rows: j.rows, orders: j.orders, aliases: j.aliases, cuts: j.cuts, prod: j.prod });
+  } catch (e) { S.err = e.message; if (!S.loaded) toast('Could not load: ' + e.message, 'bad'); }
+  S.busy = false; render();
+}
+
+/* ---------------- parsing ---------------- */
+const UNIT_RE = 'kgs?|pics?|pcs?|nos|no|rolls?|bundles?|bdl|bags?|pls|pieces?|sheets?';
+const ITEM_RE = new RegExp('^(.*?\\S)\\s*[-–—=:]\\s*(\\d+(?:\\.\\d+)?)\\s*(' + UNIT_RE + ')?\\b\\s*(\\(.*?\\))?\\s*$', 'i');
+const ITEM_RE2 = new RegExp('^(.*?[A-Za-z].*?)\\s+(\\d+(?:\\.\\d+)?)\\s*(' + UNIT_RE + ')\\b\\s*(\\(.*?\\))?\\s*$', 'i');
+const VEH_RE = /\bK[LA][\s-]?\d{1,2}[\s-]?[A-Z]{1,3}[\s-]?\d{3,4}\b/i;
+const cleanTxt = t => String(t || '').replace(/[×✕]/g, 'x').replace(/[‎‏ ]/g, ' ').replace(/\r/g, '');
+function waMatch(ln) {
+  let m = ln.match(/^\[(\d{1,2}[:.]\d{2}(?::\d{2})?\s?(?:[ap]m)?),?\s*(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})\]\s*([^:]{1,60}):\s?(.*)$/i);
+  if (m) return { time: m[1], date: m[2], sender: m[3].trim(), text: m[4] };
+  m = ln.match(/^(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}),?\s*(\d{1,2}[:.]\d{2}(?::\d{2})?\s?(?:[ap]m)?)\s*-\s*([^:]{1,60}):\s?(.*)$/i);
+  if (m) return { date: m[1], time: m[2], sender: m[3].trim(), text: m[4] };
+  return null;
+}
+function splitMessages(text) {
+  const lines = cleanTxt(text).split('\n'); const blocks = []; let cur = null, wa = false;
+  for (const ln of lines) {
+    const m = waMatch(ln);
+    if (m) { wa = true; cur = { sender: m.sender, ts: tsFrom(m.date, m.time), lines: [] }; blocks.push(cur); if (m.text.trim()) cur.lines.push(m.text); }
+    else { if (!cur) { cur = { sender: '', ts: 0, lines: [] }; blocks.push(cur); } cur.lines.push(ln); }
+  }
+  if (wa) return blocks;
+  const out = []; let c = [];
+  for (const ln of lines) { if (!ln.trim()) { if (c.length) { out.push({ sender: '', ts: 0, lines: c }); c = []; } } else c.push(ln); }
+  if (c.length) out.push({ sender: '', ts: 0, lines: c });
+  return out;
+}
+function itemLine(l) {
+  let m = l.match(ITEM_RE) || l.match(ITEM_RE2); if (!m) return null;
+  return { raw: m[1].trim(), q: parseFloat(m[2]), u: normUnit(m[3]), max: /max/i.test(m[4] || '') };
+}
+function parseOrderBlock(b) {
+  const o = { party: '', note: [], vehicle: '', lines: [] }; let prefix = '';
+  const raw = b.lines.join('\n');
+  for (let l of b.lines) {
+    l = l.replace(/@~?\S+(\s\S+)?/g, m => m).trim(); if (!l) continue;
+    const vm = l.match(VEH_RE); if (vm && !o.vehicle) o.vehicle = vm[0].toUpperCase().replace(/\s+/g, '');
+    if (/^(load|loaded|make ready|ready|vehicle|pls load|please load)\b/i.test(l)) { const nt = l.replace(/@~?[^@]*$/, '').trim(); if (nt && !/^load$/i.test(nt)) o.note.push(nt); continue; }
+    const it = itemLine(l);
+    if (it) { it.prefix = prefix; o.lines.push(it); continue; }
+    if (!o.party && !o.lines.length) o.party = l; else prefix = l;
+  }
+  o.note = o.note.join('; '); o.raw = raw; o.ts = b.ts;
+  return o;
+}
+function suggest(txt) {
+  const a = new Set(toks(txt)); if (!a.size) return [];
+  const sc = [];
+  S.items.forEach(it => { const b = new Set(toks(it.name)); let inter = 0; a.forEach(t => { if (b.has(t)) inter++; }); const s = inter / (a.size + b.size - inter); if (s >= 0.3) sc.push([s, it.name]); });
+  return sc.sort((x, y) => y[0] - x[0]).slice(0, 4).map(x => x[1]);
+}
+function matchName(raw, prefix) {
+  const tries = []; if (prefix) tries.push([prefix + ' ' + raw, false]); tries.push([raw, !!prefix]);
+  for (const [t, bare] of tries) {
+    const k = nk(t); const al = S.aliasMap[k];
+    if (al && S.byKey[nk(al)]) return { item: S.byKey[nk(al)].name, how: 'alias', check: bare };
+    if (S.byKey[k]) return { item: S.byKey[k].name, how: 'exact', check: bare };
+  }
+  return { item: null, sugg: suggest((prefix ? prefix + ' ' : '') + raw) };
+}
+function parseOrders(text) {
+  const blocks = splitMessages(text); const res = []; let skipped = 0;
+  blocks.forEach(b => {
+    const joined = b.lines.join('\n');
+    if (/\bloaded\b/i.test(joined) && !/\bload\s*@/i.test(joined)) { skipped++; return; }
+    const o = parseOrderBlock(b); if (!o.lines.length || !o.party) { skipped++; return; }
+    o.lines.forEach(l => { const m = matchName(l.raw, l.prefix); l.item = m.item; l.sugg = m.sugg || []; l.check = !!m.check; l.how = m.how || ''; });
+    o.hash = hashStr(nk(o.party) + '|' + o.lines.map(l => nk(l.prefix + l.raw) + l.q).join(','));
+    o.dup = S.orders.some(x => x.hash === o.hash);
+    o.include = !o.dup; res.push(o);
+  });
+  return { orders: res, skipped };
+}
+function parseIncoming(text) {
+  const lines = cleanTxt(text).split('\n'); const o = { vehicle: '', date: '', lines: [] }; let prefix = '';
+  for (let l of lines) {
+    l = l.trim(); if (!l) continue;
+    const im = l.match(/^incoming\s*(.*)$/i); if (im) { o.vehicle = im[1].trim(); continue; }
+    if (/^\d{1,2}[-\/.]\d{1,2}[-\/.]\d{2,4}$/.test(l)) { o.date = parseDMY(l) || ''; continue; }
+    const it = itemLine(l); if (it) { it.prefix = prefix; o.lines.push(it); continue; }
+    if (!o.vehicle && /^\d{3,5}$/.test(l)) o.vehicle = l; else prefix = l;
+  }
+  o.lines.forEach(l => { const m = matchName(l.raw, l.prefix); l.item = m.item; l.sugg = m.sugg || []; l.check = !!m.check; });
+  return o;
+}
+function parseProduction(text) {
+  const lines = cleanTxt(text).split('\n'); const o = { date: '', lines: [] };
+  for (let l of lines) {
+    l = l.trim(); if (!l) continue;
+    if (/^\d{1,2}[-\/.]\d{1,2}[-\/.]\d{2,4}$/.test(l)) { o.date = parseDMY(l) || ''; continue; }
+    if (/^(total|chainlink production|nos\b|no production|item\b)/i.test(l)) continue;
+    let name = '', nums = [];
+    if (l.indexOf('\t') >= 0) { const c = l.split('\t').map(x => x.trim()).filter(x => x !== ''); name = c[0]; nums = c.slice(1).map(Number); }
+    else { const m = l.match(/^(.*?\S)\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)(?:\s+(\d+(?:\.\d+)?))?\s*$/); if (m) { name = m[1]; nums = m.slice(2).filter(x => x != null).map(Number); } }
+    if (!name || nums.length < 3 || nums.some(isNaN)) { o.lines.push({ raw: l, bad: true }); continue; }
+    const [nos, per, total] = nums; const dim = name.match(/x(\d+(?:\.\d+)?)x(\d+(?:\.\d+)?)ft/i);
+    const sq = dim ? nos * parseFloat(dim[1]) * parseFloat(dim[2]) : (nums[3] || 0);
+    const m = matchName(name, ''); const it = m.item ? S.byKey[nk(m.item)] : null;
+    o.lines.push({ raw: name, nos, per, total, sq, item: m.item, sugg: m.sugg || [], wire: it && it.wire ? it.wire : '', warn: Math.abs(nos * per - total) > Math.max(0.5, total * 0.01) ? 'nos × per kg ≠ total kg' : '' });
+  }
+  return o;
+}
+
+/* ---------------- entry building ---------------- */
+function addRow(r) { S.rows.push({ s: r.k, d: r.date, ty: r.type, p: r.item, q: r.qty, g: r.godown, n: r.notes || '', t: r.tid }); }
+function negWarn(names) {
+  const bad = [...new Set(names)].filter(n => { const it = S.byKey[nk(n)]; return it && stockOf(it) < 0; });
+  if (bad.length) toast('Stock below zero: ' + bad.slice(0, 3).join(', ') + ' — check the entries', 'warn');
+}
+function commit(rows, extra) {
+  const opId = newOp(); rows.forEach((r, i) => { r.tid = opId + '-' + (r.tidSuffix || i); delete r.tidSuffix; });
+  const body = Object.assign({ opId, by: S.by, rows }, extra || {});
+  rows.filter(r => r.k === 'IN' || r.k === 'OUT').forEach(addRow);
+  if (extra && extra.cutsLocal) { delete body.cutsLocal; }
+  recalc(); queue({ action: 'commit', body }); return opId;
+}
+function orderStatus(o) {
+  const open = o.items.filter(i => i.state === 'open').length, ev = o.events.length;
+  if (open) return ev ? 'Partly loaded' : 'Pending';
+  return ev ? 'Loaded' : 'Cancelled';
+}
+function ageInfo(o) {
+  const h = (Date.now() - (o.createdTs || Date.now())) / 3600000;
+  const txt = h < 1 ? Math.max(1, Math.round(h * 60)) + ' min' : h < 48 ? Math.round(h) + ' h' : Math.round(h / 24) + ' d';
+  if (h >= S.cfg.lateHrs) return { c: 'bad', t: '⚠ ' + txt + ' — Loaded msg missed?' };
+  if (h >= S.cfg.waitHrs) return { c: 'warn', t: '⏳ waiting ' + txt };
+  return { c: 'n', t: 'waiting ' + txt };
+}
+const lineDone = (o, i) => o.events.filter(e => e.i === i).reduce((a, e) => a + e.q, 0);
+
+/* ---------------- order actions ---------------- */
+function saveOrdersPreview() {
+  const list = (S.prev.orders || []).filter(o => o.include); if (!list.length) { toast('Nothing selected'); return; }
+  for (const o of list) {
+    if (!o.party.trim()) { toast('Add a party name', 'bad'); return; }
+    if (o.lines.some(l => !l.item && !l.removed && !l.newItem)) { toast('Match or remove the red lines first', 'bad'); return; }
+  }
+  const opId = newOp(), aliases = [], itemAdds = []; const newOrders = [];
+  list.forEach(o => {
+    const id = 'L' + today().slice(0, 2) + today().slice(3, 5) + '-' + rid(3).toUpperCase();
+    const ord = { id, created: nowStamp(), createdTs: o.ts || Date.now(), party: o.party.trim(), vehicle: o.vehicle || '', note: o.note || '', hash: o.hash, by: S.by, raw: o.raw, status: 'Pending', items: [], events: [] };
+    o.lines.forEach(l => {
+      if (l.removed) return;
+      if (l.newItem) itemAdds.push(l.newItem);
+      const name = l.item || l.newItem.name;
+      ord.items.push({ n: name, raw: l.raw, q: l.q, u: l.u, max: l.max, state: 'open' });
+      if (l.learn) aliases.push({ a: (l.prefix ? l.prefix + ' ' : '') + l.raw, i: name });
+    });
+    ord.status = orderStatus(ord); newOrders.push(ord);
+  });
+  itemAdds.forEach(a => { if (!S.byKey[nk(a.name)]) { S.items.push({ cat: a.cat, name: a.name, loc: a.loc, unit: a.unit || '', kgPer: null, low: null, high: null, wire: '' }); } });
+  newOrders.forEach(o => S.orders.push(o)); aliases.forEach(a => S.aliases.push(a));
+  newOrders.forEach((o, i) => queue({ action: 'commit', body: { opId: opId + 'o' + i, by: S.by, summary: 'order added', order: o, rows: [], itemAdds: i === 0 ? itemAdds : [], aliases: i === 0 ? aliases : [] } }));
+  rebuild(); S.prev.orders = null; S.draft.ordText = ''; S.ordTab = 'wait';
+  toast(newOrders.length + ' order(s) added to waiting list'); render();
+}
+function confirmLine(oid, i, a) {
+  const o = S.orders.find(x => x.id === oid); if (!o) return; const ln = o.items[i]; const it = S.byKey[nk(ln.n)]; if (!it) { toast('Item missing from item list', 'bad'); return; }
+  const su = it.unit || normUnit(ln.u) || 'pcs'; let amt = null, kg = a.kg || null;
+  if (su === 'kg') amt = kg != null ? kg : (normUnit(ln.u) === 'kg' ? a.qty : null); else amt = a.qty;
+  if (amt == null || !(amt > 0)) { toast(su === 'kg' ? 'Enter the weight in kg' : 'Enter the quantity (' + su + ')', 'bad'); return; }
+  const opId = newOp(), tid = opId + '-0';
+  const notes = o.party + ' | #' + o.id + (o.vehicle ? ' | ' + o.vehicle : '') + (kg && su !== 'kg' ? ' | ' + fmt(kg) + ' kg' : '');
+  const row = { k: 'OUT', date: today(), type: 'Sale', item: it.name, qty: amt, godown: it.loc, notes, tid };
+  o.events.push({ id: tid, t: Date.now(), i, q: amt, kg: kg, d: today() }); if (a.close) ln.state = 'done';
+  o.status = orderStatus(o); addRow(row); recalc(); S.ui.panel = null;
+  queue({ action: 'commit', body: { opId, by: S.by, summary: 'loaded ' + o.id, rows: [row], order: o } });
+  negWarn([it.name]); render();
+}
+function setLineState(oid, i, st) {
+  const o = S.orders.find(x => x.id === oid); if (!o) return; o.items[i].state = st; o.status = orderStatus(o);
+  queue({ action: 'commit', body: { opId: newOp(), by: S.by, summary: 'line ' + st, order: o, rows: [] } }); render();
+}
+function undoOp(tids) {
+  const set = new Set(tids); const opId = newOp(); let order = null;
+  S.rows = S.rows.filter(r => !set.has(r.t)); S.prod = S.prod.filter(p => !set.has(p.t)); S.cuts = S.cuts.filter(c => !set.has(c[4]));
+  S.orders.forEach(o => { const n = o.events.length; o.events = o.events.filter(e => !set.has(e.id)); if (o.events.length !== n) {
+    o.items.forEach((l, i) => { if (l.state === 'done' && !o.events.some(e => e.i === i)) l.state = 'open'; else if (l.state === 'done') { /* keep closed if other events remain */ } });
+    o.status = orderStatus(o); order = o; } });
+  recalc(); queue({ action: 'undo', body: { opId, by: S.by, tids: [...set], order } }); toast('Entry removed'); render();
+}
+function opTids(tid) { const op = String(tid).split('-')[0]; const all = new Set(); S.rows.forEach(r => { if (String(r.t).split('-')[0] === op) all.add(r.t); }); S.prod.forEach(p => { if (String(p.t).split('-')[0] === op) all.add(p.t); }); S.cuts.forEach(c => { if (String(c[4]).split('-')[0] === op) all.add(c[4]); }); all.add(tid); return [...all]; }
+
+/* ---------------- views ---------------- */
+const NAV = [['dash', 'Today'], ['orders', 'Orders'], ['incoming', 'Incoming'], ['prod', 'Production'], ['cut', 'Cutting'], ['stock', 'Stock'], ['log', 'Log'], ['set', 'Settings']];
+function pendingOrders() { return S.orders.filter(o => o.status === 'Pending' || o.status === 'Partly loaded'); }
+function render() {
+  document.documentElement.setAttribute('data-theme', S.theme);
+  const app = $('#app');
+  if (!S.key) { app.innerHTML = loginView(); return; }
+  const pend = pendingOrders().length;
+  app.innerHTML = '<aside id="side"><div class="logo"><i></i><span>Office &amp; 5th<br>Godown IMS</span></div>' +
+    NAV.map(n => '<button class="nav ' + (S.view === n[0] ? 'on' : '') + '" data-act="nav" data-v="' + n[0] + '">' + n[1] + (n[0] === 'orders' && pend ? '<span class="bd">' + pend + '</span>' : '') + '</button>').join('') +
+    '<div class="foot">v' + VERSION + '</div></aside><main id="main"><div class="top"><h1>' + (NAV.find(n => n[0] === S.view) || [0, ''])[1] + '</h1><span id="pill" class="chip"></span>' +
+    '<button class="btn sm g right" data-act="reload">' + (S.busy ? 'Loading…' : '⟳ Refresh') + '</button></div><div id="view">' + (S.loaded || S.view === 'set' ? viewHtml() : '<div class="card">Loading your sheet…</div>') + '</div></main>';
+  updateSyncPill(); afterRender();
+}
+function viewHtml() {
+  switch (S.view) { case 'dash': return dashView(); case 'orders': return ordersView(); case 'incoming': return incomingView(); case 'prod': return prodView(); case 'cut': return cutView(); case 'stock': return stockView(); case 'log': return logView(); default: return setView(); }
+}
+function afterRender() { document.querySelectorAll('textarea[data-draft]').forEach(t => { if (S.draft[t.dataset.draft] != null) t.value = S.draft[t.dataset.draft]; }); }
+function loginView() {
+  return '<div class="login"><div class="card"><div class="logo" style="justify-content:center;color:var(--ink)"><i></i><span>Office &amp; 5th Godown IMS</span></div><p class="muted">Enter the password</p>' +
+    '<input type="password" id="pw" class="wf" placeholder="Password" data-enter="login"><p><input id="who" class="wf" placeholder="Your name (saved with each entry)" value="' + esc(S.by) + '"></p><button class="btn wf" data-act="login">Open</button><div id="lerr" class="small" style="color:var(--bad);margin-top:8px"></div></div></div>';
+}
+function dashView() {
+  const pend = pendingOrders(), t = today();
+  const late = pend.filter(o => ageInfo(o).c !== 'n'); const goneToday = S.rows.filter(r => r.s === 'OUT' && r.d === t && r.ty === 'Sale').length;
+  const inToday = S.rows.filter(r => r.s === 'IN' && r.d === t).length; const prodToday = S.prod.filter(p => p.d === t).reduce((a, p) => a + p.nos, 0);
+  let neg = 0, low = 0, none = 0; S.items.forEach(it => { const s = statusOf(it); if (s.k === 'neg') neg++; else if (s.k === 'none') none++; else if (s.k === 'low') low++; });
+  const k = (n, l, w) => '<div class="kpi ' + (w ? 'w' : '') + '"><b>' + n + '</b><span class="muted">' + l + '</span></div>';
+  return '<div class="grid">' + k(pend.length, 'Orders waiting for Loaded', pend.length) + k(late.length, 'Waiting too long', late.length) + k(goneToday, 'Lines gone today') + k(inToday, 'Incoming lines today') + k(prodToday, 'Chainlink rolls made today') + k(neg, 'Items below zero', neg) + k(low + none, 'Low / no stock') + '</div>' +
+    '<div class="card"><h2>Needs attention</h2>' + (late.length ? late.map(o => '<div class="ln"><span class="nm">' + esc(o.party) + '</span><span class="chip ' + ageInfo(o).c + '">' + ageInfo(o).t + '</span><span class="muted small">' + o.items.filter(i => i.state === 'open').length + ' open lines · #' + esc(o.id) + '</span><button class="btn sm" data-act="goOrder" data-id="' + esc(o.id) + '">Open</button></div>').join('') : '<span class="muted">Nothing waiting too long ✓</span>') + '</div>' +
+    '<div class="card"><h2>Latest entries</h2>' + recentTable(10) + '</div>';
+}
+function recentTable(n, withUndo) {
+  const rows = S.rows.map((r, i) => [r, i]).sort((a, b) => dkey(b[0].d) - dkey(a[0].d) || b[1] - a[1]).slice(0, n).map(x => x[0]);
+  if (!rows.length) return '<span class="muted">No entries yet</span>';
+  return '<div class="tw"><table><tr><th>Date</th><th>Type</th><th>Item</th><th>Qty</th><th>Godown</th><th>Note</th>' + (withUndo ? '<th></th>' : '') + '</tr>' + rows.map(r =>
+    '<tr><td class="nowrap">' + esc(r.d) + '</td><td><span class="chip ' + (r.s === 'IN' ? '' : 'n') + '">' + (r.s === 'IN' ? '＋ ' : '－ ') + esc(r.ty) + '</span></td><td>' + esc(r.p) + '</td><td><b>' + fmt(r.q) + '</b></td><td>' + esc(r.g) + '</td><td class="muted small">' + esc(r.n) + '</td>' +
+    (withUndo ? '<td>' + (r.t ? undoBtn(r.t) : '') + '</td>' : '') + '</tr>').join('') + '</table></div>';
+}
+function undoBtn(tid) {
+  const key = 'u:' + tid;
+  return S.ui.confirm === key ? '<button class="btn sm" data-act="undoYes" data-tid="' + esc(tid) + '">Yes, remove</button> <button class="btn sm g" data-act="confirmNo">No</button>' : '<button class="btn sm g" data-act="undoAsk" data-tid="' + esc(tid) + '">↩ Undo</button>';
+}
+
+/* --- orders --- */
+function ordersView() {
+  const pend = pendingOrders(); const t = today();
+  const doneToday = S.orders.filter(o => o.status === 'Loaded' && o.events.some(e => e.d === t));
+  const tabs = [['wait', 'Waiting (' + pend.length + ')'], ['today', 'Loaded today (' + doneToday.length + ')'], ['all', 'All recent']];
+  return '<div class="card"><h2>1 · Paste the load messages</h2><textarea data-draft="ordText" placeholder="Paste WhatsApp messages here (one or many)…"></textarea><div class="row" style="margin-top:8px"><button class="btn" data-act="readOrders">Read messages</button><button class="btn g" data-act="clearOrders">Clear</button></div>' + prevOrdersHtml() + '</div>' +
+    '<div class="tabs">' + tabs.map(x => '<button class="tab ' + (S.ordTab === x[0] ? 'on' : '') + '" data-act="ordTab" data-t="' + x[0] + '">' + x[1] + '</button>').join('') + '<input id="ordq" class="w2" placeholder="Search party / item / vehicle" value="' + esc(S.ordQ) + '" data-inp="ordq"></div><div id="ordlist">' + ordListHtml() + '</div>';
+}
+function prevOrdersHtml() {
+  const p = S.prev.orders; if (!p) return '';
+  if (!p.length) return '<div class="note">No orders found in that text' + (S.prev.skipped ? ' (' + S.prev.skipped + ' message(s) skipped — no party or items, or look like “Loaded” replies)' : '') + '.</div>';
+  const ready = p.filter(o => o.include).length;
+  return '<div class="note">Found ' + p.length + ' order(s)' + (S.prev.skipped ? ', skipped ' + S.prev.skipped + ' (no party / no items / “Loaded” replies)' : '') + '. Check the names, then add.</div>' + p.map((o, oi) =>
+    '<div class="card" style="border-color:var(--acc)"><div class="row"><label><input type="checkbox" data-chg="oinc" data-o="' + oi + '" ' + (o.include ? 'checked' : '') + '> add</label><input class="wf" style="flex:1;min-width:200px;font-weight:700" value="' + esc(o.party) + '" data-chg="oparty" data-o="' + oi + '" placeholder="Party">' +
+    '<input class="w2" value="' + esc(o.vehicle) + '" data-chg="oveh" data-o="' + oi + '" placeholder="Vehicle">' + (o.dup ? '<span class="chip warn">⚠ looks already added</span>' : '') + '</div>' + (o.note ? '<div class="small muted" style="margin:4px 0">Note: ' + esc(o.note) + '</div>' : '') +
+    o.lines.map((l, li) => l.removed ? '' : '<div class="ln"><span class="nm">' + (l.prefix ? '<span class="muted small">' + esc(l.prefix) + '</span> ' : '') + esc(l.raw) + '</span><span class="nowrap"><b>' + fmt(l.q) + '</b> ' + esc(l.u || '') + (l.max ? ' (max)' : '') + '</span>' +
+      '<input class="w2" list="itemlist" value="' + esc(l.item || (l.newItem && l.newItem.name) || '') + '" placeholder="Match item…" data-chg="lpick" data-o="' + oi + '" data-l="' + li + '" style="min-width:230px;' + (l.item || l.newItem ? '' : 'border-color:var(--bad)') + '">' +
+      (l.item ? '<span class="chip ' + (l.check ? 'warn' : '') + '">' + (l.check ? '⚠ check' : '✓') + '</span>' : (l.newItem ? '<span class="chip warn">new item</span>' : (l.sugg || []).map((s, si) => '<button class="btn sm g" data-act="lsug" data-o="' + oi + '" data-l="' + li + '" data-s="' + si + '">' + esc(s) + '</button>').join('') + '<button class="btn sm o" data-act="lnew" data-o="' + oi + '" data-l="' + li + '">＋ New item</button>')) +
+      '<button class="btn sm g" data-act="lrem" data-o="' + oi + '" data-l="' + li + '">✕</button>' + newItemForm(oi, li, l) + '</div>').join('') + '</div>').join('') +
+    '<button class="btn" data-act="saveOrders" ' + (ready ? '' : 'disabled') + '>Add ' + ready + ' order(s) to waiting list</button>';
+}
+function newItemForm(oi, li, l) {
+  if (!(S.ui.newItem && S.ui.newItem.o === oi && S.ui.newItem.l === li)) return '';
+  const f = S.ui.newItem;
+  return '<div class="panel"><div class="row"><input class="wf" style="flex:2" id="ni_name" value="' + esc(f.name) + '" placeholder="Item name (use the sheet naming)"><input list="catlist" id="ni_cat" class="w2" placeholder="Category"><select id="ni_loc">' + GODOWNS.map(g => '<option>' + g + '</option>').join('') + '</select><select id="ni_unit">' + UNITS.map(u => '<option value="' + u + '">' + (u || 'unit?') + '</option>').join('') + '</select><button class="btn sm" data-act="niSave">Add item</button><button class="btn sm g" data-act="niCancel">Cancel</button></div></div>';
+}
+function ordListHtml() {
+  const t = today(), q = S.ordQ.trim().toLowerCase(); let list = S.orders.slice();
+  if (S.ordTab === 'wait') list = list.filter(o => o.status === 'Pending' || o.status === 'Partly loaded');
+  else if (S.ordTab === 'today') list = list.filter(o => o.events.some(e => e.d === t));
+  if (q) list = list.filter(o => (o.party + ' ' + o.vehicle + ' ' + o.note + ' ' + o.id + ' ' + o.items.map(i => i.n + ' ' + i.raw).join(' ')).toLowerCase().indexOf(q) >= 0);
+  list.sort((a, b) => (a.createdTs || 0) - (b.createdTs || 0)); if (S.ordTab !== 'wait') list.reverse();
+  if (!list.length) return '<div class="card muted">Nothing here.</div>';
+  return list.slice(0, 80).map(orderCard).join('');
+}
+function orderCard(o) {
+  const open = o.status === 'Pending' || o.status === 'Partly loaded'; const age = ageInfo(o);
+  const cancelKey = 'c:' + o.id;
+  return '<div class="card ord" data-oid="' + esc(o.id) + '"><div class="ohead"><b style="font-size:16px">' + esc(o.party) + '</b>' + (open ? '<span class="chip ' + age.c + '">' + age.t + '</span>' : '<span class="chip ' + (o.status === 'Loaded' ? '' : 'n') + '">' + esc(o.status) + '</span>') +
+    '<span class="muted small">#' + esc(o.id) + ' · ' + esc(o.created) + (o.vehicle ? ' · 🚚 ' + esc(o.vehicle) : '') + (o.note ? ' · ' + esc(o.note) : '') + '</span>' +
+    (open ? '<span class="right">' + (S.ui.confirm === cancelKey ? '<button class="btn sm" data-act="cancelYes" data-id="' + esc(o.id) + '">Yes, cancel order</button> <button class="btn sm g" data-act="confirmNo">No</button>' : '<button class="btn sm g" data-act="cancelAsk" data-id="' + esc(o.id) + '">Cancel order</button>') + '</span>' : '') + '</div>' +
+    o.items.map((l, i) => lineHtml(o, l, i)).join('') + '</div>';
+}
+function lineHtml(o, l, i) {
+  const it = S.byKey[nk(l.n)]; const done = lineDone(o, i); const su = it ? (it.unit || normUnit(l.u) || 'pcs') : '';
+  const evs = o.events.filter(e => e.i === i);
+  let h = '<div class="ln ' + (l.state === 'done' ? 'done' : '') + '"><span class="nm">' + esc(l.n) + '</span><span class="nowrap">ordered <b>' + fmt(l.q) + '</b> ' + esc(l.u || '') + (l.max ? ' (max)' : '') + '</span>';
+  if (it && !it.unit) h += '<span class="chip warn" title="Set the stock unit in Stock → item">unit not set</span>';
+  if (done) h += '<span class="chip">✓ gone ' + fmt(done) + ' ' + su + '</span>';
+  if (l.state === 'dropped') h += '<span class="chip n">not loaded</span> <button class="btn sm g" data-act="reopen" data-id="' + esc(o.id) + '" data-i="' + i + '">Reopen</button>';
+  else if (l.state === 'done' && done) h += '<button class="btn sm g" data-act="reopen" data-id="' + esc(o.id) + '" data-i="' + i + '">Reopen line</button>';
+  else if (l.state === 'open') h += '<button class="btn sm" data-act="lFull" data-id="' + esc(o.id) + '" data-i="' + i + '">Full</button><button class="btn sm o" data-act="lPanel" data-id="' + esc(o.id) + '" data-i="' + i + '" data-m="qty">Qty</button><button class="btn sm o" data-act="lPanel" data-id="' + esc(o.id) + '" data-i="' + i + '" data-m="kg">Weight</button><button class="btn sm g" data-act="lDrop" data-id="' + esc(o.id) + '" data-i="' + i + '">Not loaded</button>';
+  const pn = S.ui.panel;
+  if (pn && pn.id === o.id && pn.i === i && l.state === 'open') {
+    h += '<div class="panel"><div class="row">' + (su !== 'kg' ? '<label>Qty (' + esc(su) + ') <input class="w1" id="pq" inputmode="decimal" value="' + esc(pn.qty != null ? pn.qty : (pn.m === 'qty' ? l.q : '')) + '"></label>' : '') +
+      '<label>Weight kg' + (su === 'kg' ? ' (stock is in kg)' : ' (optional)') + ' <input class="w1" id="pk" inputmode="decimal" value="' + esc(pn.kg != null ? pn.kg : '') + '"></label>' +
+      '<button class="btn sm" data-act="pOk" data-close="1">Gone — line complete</button><button class="btn sm g" data-act="pOk" data-close="0">Part gone — rest still pending</button><button class="btn sm g" data-act="pNo">Close</button></div></div>';
+  }
+  evs.forEach(e => { h += '<div class="ev">' + esc(e.d) + ' · ' + fmt(e.q) + ' ' + su + (e.kg ? ' (' + fmt(e.kg) + ' kg)' : '') + ' ' + undoBtn(e.id) + '</div>'; });
+  return h + '</div>';
+}
+
+/* --- incoming --- */
+function incomingView() {
+  const p = S.prev.inc; const ty = S.ui.inType || (S.types.in.indexOf('Transfer In') >= 0 ? 'Transfer In' : S.types.in[0]);
+  return '<div class="card"><h2>Paste the incoming message</h2><textarea data-draft="incText" placeholder="Incoming 9027&#10;26/10/2026&#10;&#10;Nylon wire 4mm =4 bundle&#10;…"></textarea><div class="row" style="margin-top:8px"><button class="btn" data-act="readInc">Read message</button><button class="btn g" data-act="clearInc">Clear</button></div>' +
+    (p ? '<div class="note">Check the names, date and type, then save.</div><div class="row"><label>Date <input class="w2" id="inc_date" data-mask="1" value="' + esc(p.date || today()) + '" placeholder="dd-mm-yyyy"></label><label>Vehicle / note <input class="w2" id="inc_veh" value="' + esc(p.vehicle) + '"></label><label>Type <select id="inc_type">' + S.types.in.map(t => '<option ' + (t === ty ? 'selected' : '') + '>' + esc(t) + '</option>').join('') + '</select></label></div>' +
+      p.lines.map((l, li) => lineMatchRow(l, 'inc', li)).join('') + '<p><button class="btn" data-act="saveInc">Save incoming</button></p>' : '') + '</div>' +
+    '<div class="card"><h2>Recent incoming</h2>' + recentList('IN') + '</div>';
+}
+function lineMatchRow(l, scope, li) {
+  return '<div class="ln"><span class="nm">' + (l.prefix ? '<span class="muted small">' + esc(l.prefix) + '</span> ' : '') + esc(l.raw) + '</span><span class="nowrap"><b>' + fmt(l.q) + '</b> ' + esc(l.u || '') + '</span>' +
+    '<input class="w2" list="itemlist" value="' + esc(l.item || '') + '" placeholder="Match item…" data-chg="' + scope + 'pick" data-l="' + li + '" style="min-width:230px;' + (l.item ? '' : 'border-color:var(--bad)') + '">' +
+    (l.item ? '<span class="chip ' + (l.check ? 'warn' : '') + '">' + (l.check ? '⚠ check' : '✓') + '</span>' : (l.sugg || []).map((s, si) => '<button class="btn sm g" data-act="' + scope + 'sug" data-l="' + li + '" data-s="' + si + '">' + esc(s) + '</button>').join('')) +
+    '<button class="btn sm g" data-act="' + scope + 'rem" data-l="' + li + '">✕</button></div>';
+}
+function recentList(kind) {
+  const rows = S.rows.filter(r => r.s === kind).slice(-12).reverse();
+  return rows.length ? '<div class="tw"><table><tr><th>Date</th><th>Type</th><th>Item</th><th>Qty</th><th>Godown</th><th>Note</th></tr>' + rows.map(r => '<tr><td>' + esc(r.d) + '</td><td>' + esc(r.ty) + '</td><td>' + esc(r.p) + '</td><td><b>' + fmt(r.q) + '</b></td><td>' + esc(r.g) + '</td><td class="muted small">' + esc(r.n) + '</td></tr>').join('') + '</table></div>' : '<span class="muted">None yet</span>';
+}
+
+/* --- production --- */
+function prodView() {
+  const p = S.prev.prod;
+  let h = '<div class="card"><h2>Paste the chainlink production</h2><textarea data-draft="prodText" placeholder="09-10-2026&#10;Gi Ch 50x50x3mmx4x50ft&#9;2&#9;35.6&#9;71.2&#10;…"></textarea><div class="note">Format: item, nos, per kg, total kg (copied from Excel or typed). A date line is optional.</div><div class="row"><button class="btn" data-act="readProd">Read production</button><button class="btn g" data-act="clearProd">Clear</button></div>';
+  if (p) {
+    h += '<div class="row" style="margin-top:10px"><label>Date <input class="w2" id="pr_date" data-mask="1" value="' + esc(p.date || today()) + '"></label></div>';
+    h += p.lines.map((l, li) => l.bad ? '<div class="ln"><span class="chip bad">⚠ could not read</span><span class="nm">' + esc(l.raw) + '</span><button class="btn sm g" data-act="prem" data-l="' + li + '">✕</button></div>' :
+      '<div class="ln"><span class="nm">' + esc(l.raw) + '</span><span class="nowrap"><b>' + fmt(l.nos) + '</b> nos · ' + fmt(l.per) + ' kg each · <b>' + fmt(l.total) + ' kg</b> · ' + fmt(l.sq) + ' sq.ft</span>' + (l.warn ? '<span class="chip warn">⚠ ' + l.warn + '</span>' : '') +
+      '<input class="w2" list="itemlist" value="' + esc(l.item || '') + '" placeholder="Match item…" data-chg="ppick" data-l="' + li + '" style="min-width:230px;' + (l.item ? '' : 'border-color:var(--bad)') + '">' +
+      (l.item ? '' : (l.sugg || []).map((s, si) => '<button class="btn sm g" data-act="psug" data-l="' + li + '" data-s="' + si + '">' + esc(s) + '</button>').join('')) +
+      '<input class="w2" list="itemlist" value="' + esc(l.wire) + '" placeholder="Wire used (or type none)" data-chg="pwire" data-l="' + li + '" style="min-width:220px;' + (l.wire ? '' : 'border-color:var(--bad)') + '">' + wireChip(l) + '<button class="btn sm g" data-act="prem" data-l="' + li + '">✕</button></div>').join('');
+    const t = p.lines.filter(l => !l.bad).reduce((a, l) => ({ n: a.n + l.nos, k: a.k + l.total, s: a.s + l.sq }), { n: 0, k: 0, s: 0 });
+    h += '<div class="note">Totals: ' + fmt(t.n) + ' nos · ' + fmt(t.k) + ' kg · ' + fmt(t.s) + ' sq.ft. Saving adds the chainlink to stock and reduces the wire (kg).</div><button class="btn" data-act="saveProd">Save production</button>';
+  }
+  h += '</div><div class="card"><h2>Recent production</h2>' + (S.prod.length ? '<div class="tw"><table><tr><th>Date</th><th>Item</th><th>Nos</th><th>Kg</th><th>Sq.ft</th><th>Wire</th><th></th></tr>' + S.prod.slice().reverse().slice(0, 25).map(x => '<tr><td>' + esc(x.d) + '</td><td>' + esc(x.item) + '</td><td>' + fmt(x.nos) + '</td><td>' + fmt(x.total) + '</td><td>' + fmt(x.sqft) + '</td><td class="muted small">' + esc(x.wire) + '</td><td>' + (x.t ? undoBtn(x.t) : '') + '</td></tr>').join('') + '</table></div>' : '<span class="muted">None yet</span>') + '</div>';
+  return h;
+}
+function wireChip(l) {
+  if (!l.wire) return ''; if (/^none$/i.test(l.wire)) return '<span class="chip n">no wire deduction</span>';
+  const w = S.byKey[nk(l.wire)]; if (!w) return '<span class="chip bad">⚠ wire not in item list</span>';
+  if (w.unit && w.unit !== 'kg') return '<span class="chip warn">⚠ wire stock unit is ' + esc(w.unit) + ', not kg</span>';
+  if (!w.unit) return '<span class="chip warn">wire unit not set</span>'; return '<span class="chip">✓ kg</span>';
+}
+
+/* --- cutting --- */
+function cutView() {
+  const f = S.draft;
+  return '<div class="card"><h2>Record a cut piece</h2><div class="note">Cut pieces only come from a roll, so this is a record only — stock does not change.</div><div class="row"><label>Date <input class="w2" id="cu_date" data-mask="1" value="' + esc(f.cuDate || today()) + '"></label>' +
+    '<label>Party <input class="w2" list="partylist" id="cu_party" value="' + esc(f.cuParty || '') + '" style="min-width:230px"></label><label>Item <input class="w2" list="itemlist" id="cu_item" value="' + esc(f.cuItem || '') + '" style="min-width:230px"></label><label>Length (ft) <input class="w1" id="cu_qty" inputmode="decimal"></label><button class="btn" data-act="saveCut">Add</button></div></div>' +
+    '<div class="card"><h2>Recent cuts</h2>' + (S.cuts.length ? '<div class="tw"><table><tr><th>Date</th><th>Party</th><th>Item</th><th>Qty</th><th></th></tr>' + S.cuts.slice().reverse().slice(0, 40).map(c => '<tr><td>' + esc(c[0]) + '</td><td>' + esc(c[1]) + '</td><td>' + esc(c[2]) + '</td><td>' + esc(c[3]) + '</td><td>' + (c[4] ? undoBtn(c[4]) : '') + '</td></tr>').join('') + '</table></div>' : '<span class="muted">None yet</span>') + '</div>';
+}
+
+/* --- stock --- */
+function stockView() {
+  let h = '';
+  if (S.ui.item) h += itemPanel(S.ui.item);
+  const unknown = {}; S.rows.forEach(r => { if (!S.byKey[nk(r.p)]) unknown[r.p] = (unknown[r.p] || 0) + 1; });
+  const uk = Object.keys(unknown);
+  if (uk.length) h += '<div class="note">⚠ ' + uk.length + ' name(s) in Stock IN/OUT are not in the item list, so their stock is not counted here: ' + esc(uk.slice(0, 6).join(', ')) + (uk.length > 6 ? ' …' : '') + '</div>';
+  h += '<div class="row" style="margin-bottom:10px"><input id="stq" class="w2" style="min-width:240px" placeholder="Search item / category" value="' + esc(S.stockQ) + '" data-inp="stq"><select data-chg="stgo"><option value="">All godowns</option>' + GODOWNS.map(g => '<option ' + (S.stockGo === g ? 'selected' : '') + '>' + g + '</option>').join('') + '</select><select data-chg="stst"><option value="">All status</option>' +
+    [['neg', 'Negative'], ['none', 'No stock'], ['low', 'Low'], ['ok', 'In stock'], ['over', 'Overstock'], ['nolv', 'Level not set']].map(x => '<option value="' + x[0] + '" ' + (S.stockSt === x[0] ? 'selected' : '') + '>' + x[1] + '</option>').join('') + '</select></div><div class="card"><div class="tw" id="stlist">' + stockTable() + '</div></div>';
+  return h;
+}
+function stockTable() {
+  const q = S.stockQ.trim().toLowerCase();
+  const list = S.items.filter(it => (!S.stockGo || it.loc === S.stockGo) && (!q || (it.name + ' ' + it.cat).toLowerCase().indexOf(q) >= 0) && (!S.stockSt || statusOf(it).k === S.stockSt));
+  return '<table><tr><th>Category</th><th>Item</th><th>Godown</th><th>Stock</th><th>Status</th></tr>' + list.slice(0, 300).map(it => { const s = statusOf(it); return '<tr class="' + (S.ui.item === it.name ? 'sel' : '') + '" data-act="itemOpen" data-n="' + esc(it.name) + '" style="cursor:pointer"><td class="muted">' + esc(it.cat) + '</td><td><b>' + esc(it.name) + '</b></td><td>' + esc(it.loc) + '</td><td><b>' + fmt(stockOf(it)) + '</b> ' + esc(it.unit) + '</td><td><span class="chip ' + s.c + '">' + s.t + '</span></td></tr>'; }).join('') + '</table>' + (list.length > 300 ? '<div class="muted small">Showing 300 of ' + list.length + ' — use search</div>' : '');
+}
+function itemPanel(name) {
+  const it = S.byKey[nk(name)]; if (!it) return '';
+  const mv = (S.moves[nk(it.name)] || []).slice(-10).reverse();
+  return '<div class="card" style="border-color:var(--acc)"><div class="row"><h2 style="margin:0">' + esc(it.name) + '</h2><span class="chip n">' + esc(it.loc) + '</span><button class="btn sm g right" data-act="itemClose">Close</button></div><div class="row" style="margin:10px 0">' +
+    '<label>Stock unit <select id="ip_unit">' + UNITS.map(u => '<option value="' + u + '" ' + (it.unit === u ? 'selected' : '') + '>' + (u || '(not set)') + '</option>').join('') + '</select></label>' +
+    '<label>Kg per unit <input class="w1" id="ip_kg" value="' + esc(it.kgPer == null ? '' : it.kgPer) + '"></label><label>Red level <input class="w1" id="ip_low" value="' + esc(it.low == null ? '' : it.low) + '"></label><label>Green level <input class="w1" id="ip_high" value="' + esc(it.high == null ? '' : it.high) + '"></label>' +
+    '<label>Wire used <input class="w2" list="itemlist" id="ip_wire" value="' + esc(it.wire) + '"></label><button class="btn sm" data-act="itemSave" data-n="' + esc(it.name) + '">Save</button></div>' +
+    '<div class="small muted">Last movements (stock after each entry)</div>' + (mv.length ? '<table><tr><th>Date</th><th>Type</th><th>Qty</th><th>Stock after</th><th>Note</th></tr>' + mv.map(m => '<tr><td>' + esc(m.r.d) + '</td><td>' + esc(m.r.ty) + '</td><td>' + (m.r.s === 'IN' ? '+' : '−') + fmt(m.r.q) + '</td><td><b>' + fmt(m.bal) + '</b></td><td class="muted small">' + esc(m.r.n) + '</td></tr>').join('') + '</table>' : '<div class="muted">No movements</div>') + '</div>';
+}
+
+/* --- log --- */
+function logView() {
+  const f = S.draft;
+  return '<div class="card"><h2>Manual entry</h2><div class="note">For corrections or anything not in a message. Godown is taken from the item.</div><div class="row"><label>Date <input class="w2" id="mn_date" data-mask="1" value="' + esc(f.mnDate || today()) + '"></label><label>Direction <select id="mn_dir"><option value="OUT">Out</option><option value="IN">In</option></select></label>' +
+    '<label>Type <select id="mn_type">' + [...new Set(S.types.out.concat(S.types.in))].map(t => '<option>' + esc(t) + '</option>').join('') + '</select></label><label>Item <input class="w2" list="itemlist" id="mn_item" style="min-width:230px"></label><label>Qty <input class="w1" id="mn_qty" inputmode="decimal"></label><label>Note <input class="w2" id="mn_note"></label><button class="btn" data-act="saveManual">Add</button></div></div>' +
+    '<div class="card"><h2>Latest 60 entries</h2>' + recentTable(60, true) + '</div>';
+}
+
+/* --- settings --- */
+function setView() {
+  const rep = S.syncLog.map(x => x.t + '  ' + x.a + '  ' + x.ms + 'ms  ' + (x.ok ? 'ok' : 'ERROR ' + x.err)).join('\n') || 'No calls yet';
+  return '<div class="card"><h2>You</h2><div class="row"><label>Name (saved with every entry) <input id="s_by" value="' + esc(S.by) + '"></label><button class="btn sm" data-act="saveBy">Save</button></div></div>' +
+    '<div class="card"><h2>Waiting alerts</h2><div class="row"><label>Amber after (hours) <input class="w1" id="s_w" value="' + S.cfg.waitHrs + '"></label><label>Red after (hours) <input class="w1" id="s_l" value="' + S.cfg.lateHrs + '"></label><button class="btn sm" data-act="saveCfg">Save</button></div></div>' +
+    '<div class="card"><h2>Look</h2><div class="row">' + ['auto', 'light', 'dark'].map(t => '<button class="tab ' + (S.theme === t ? 'on' : '') + '" data-act="theme" data-t="' + t + '">' + t + '</button>').join('') + '</div></div>' +
+    '<div class="card"><h2>Connection</h2><div class="row"><button class="btn sm" data-act="ping">Test connection</button><button class="btn sm g" data-act="logout">Log out on this device</button><span class="muted small">Tool v' + VERSION + '</span><span id="pingres" class="small"></span></div><h2 style="margin-top:14px">Sync report</h2><pre class="rep">' + esc(rep) + '</pre></div>';
+}
+
+/* ---------------- events ---------------- */
+const val = id => { const e = document.getElementById(id); return e ? e.value : ''; };
+const num = s => { const n = parseFloat(String(s).replace(',', '.')); return isFinite(n) ? n : null; };
+const A = {
+  nav(d) { S.view = d.v; S.ui = {}; render(); },
+  reload() { loadAll(); },
+  async login() {
+    const pw = val('pw'); if (!pw) return; S.key = pw; S.by = val('who').trim(); $('#lerr').textContent = 'Checking…';
+    try { await api('ping'); ls.set('o5_key', pw); ls.set('o5_by', S.by); S.view = 'dash'; render(); loadAll(); } catch (e) { S.key = ''; const el = $('#lerr'); if (el) el.textContent = e.message === 'auth' ? 'Wrong password' : e.message; }
+  },
+  goOrder(d) { S.view = 'orders'; S.ordTab = 'wait'; S.ordQ = d.id; render(); },
+  readOrders() { S.draft.ordText = val_('ordText'); const r = parseOrders(S.draft.ordText); S.prev.orders = r.orders; S.prev.skipped = r.skipped; render(); },
+  clearOrders() { S.draft.ordText = ''; S.prev.orders = null; render(); },
+  saveOrders: saveOrdersPreview,
+  ordTab(d) { S.ordTab = d.t; render(); },
+  lsug(d) { const l = S.prev.orders[+d.o].lines[+d.l]; setLineItem(l, l.sugg[+d.s]); render(); },
+  lrem(d) { S.prev.orders[+d.o].lines[+d.l].removed = true; render(); },
+  lnew(d) { const l = S.prev.orders[+d.o].lines[+d.l]; S.ui.newItem = { o: +d.o, l: +d.l, name: l.raw }; render(); },
+  niCancel() { S.ui.newItem = null; render(); },
+  niSave() {
+    const f = S.ui.newItem, name = val('ni_name').trim(); if (!name) { toast('Enter the item name', 'bad'); return; }
+    if (S.byKey[nk(name)]) { toast('That item already exists — pick it from the list', 'bad'); return; }
+    const l = S.prev.orders[f.o].lines[f.l]; l.newItem = { name, cat: val('ni_cat').trim(), loc: val('ni_loc'), unit: val('ni_unit') }; l.item = null; l.learn = true; S.ui.newItem = null; render();
+  },
+  lFull(d) {
+    const o = S.orders.find(x => x.id === d.id), ln = o.items[+d.i], it = S.byKey[nk(ln.n)]; if (!it) return;
+    const ou = normUnit(ln.u), su = it.unit || ou || 'pcs';
+    if (su === ou || (!it.unit)) { if (su === 'kg') confirmLine(d.id, +d.i, { kg: ln.q, close: true }); else confirmLine(d.id, +d.i, { qty: ln.q, close: true }); }
+    else { S.ui.panel = { id: d.id, i: +d.i, m: 'qty' }; toast('Ordered in ' + (ou || 'units') + ' but stock is in ' + su + ' — enter the amount', 'warn'); render(); }
+  },
+  lPanel(d) { S.ui.panel = { id: d.id, i: +d.i, m: d.m }; render(); },
+  pNo() { S.ui.panel = null; render(); },
+  pOk(d) { const p = S.ui.panel; confirmLine(p.id, p.i, { qty: num(val('pq')), kg: num(val('pk')), close: d.close === '1' }); },
+  lDrop(d) { setLineState(d.id, +d.i, 'dropped'); },
+  reopen(d) { setLineState(d.id, +d.i, 'open'); },
+  cancelAsk(d) { S.ui.confirm = 'c:' + d.id; render(); },
+  confirmNo() { S.ui.confirm = null; render(); },
+  cancelYes(d) { const o = S.orders.find(x => x.id === d.id); o.items.forEach(l => { if (l.state === 'open') l.state = 'dropped'; }); o.status = orderStatus(o); S.ui.confirm = null; queue({ action: 'commit', body: { opId: newOp(), by: S.by, summary: 'order cancelled', order: o, rows: [] } }); render(); },
+  undoAsk(d) { S.ui.confirm = 'u:' + d.tid; render(); },
+  undoYes(d) { S.ui.confirm = null; undoOp(opTids(d.tid)); },
+  readInc() { S.draft.incText = val_('incText'); S.prev.inc = parseIncoming(S.draft.incText); render(); },
+  clearInc() { S.draft.incText = ''; S.prev.inc = null; render(); },
+  incsug(d) { const l = S.prev.inc.lines[+d.l]; setLineItem(l, l.sugg[+d.s], true); render(); },
+  increm(d) { S.prev.inc.lines.splice(+d.l, 1); render(); },
+  saveInc() {
+    const p = S.prev.inc, date = parseDMY(val('inc_date')); if (!date) { toast('Date should be dd-mm-yyyy', 'bad'); return; }
+    if (!p.lines.length) { toast('No lines'); return; } if (p.lines.some(l => !l.item)) { toast('Match or remove the red lines first', 'bad'); return; }
+    const type = val('inc_type'), veh = val('inc_veh').trim(), aliases = [];
+    const rows = p.lines.map(l => { const it = S.byKey[nk(l.item)]; if (l.learn) aliases.push({ a: (l.prefix ? l.prefix + ' ' : '') + l.raw, i: it.name }); return { k: 'IN', date, type, item: it.name, qty: l.q, godown: it.loc, notes: ('Incoming ' + veh).trim() }; });
+    commit(rows, { summary: 'incoming', aliases }); negWarn(rows.map(r => r.item)); S.prev.inc = null; S.draft.incText = ''; toast(rows.length + ' incoming lines saved'); render();
+  },
+  readProd() { S.draft.prodText = val_('prodText'); S.prev.prod = parseProduction(S.draft.prodText); render(); },
+  clearProd() { S.draft.prodText = ''; S.prev.prod = null; render(); },
+  psug(d) { const l = S.prev.prod.lines[+d.l]; setProdItem(l, l.sugg[+d.s]); render(); },
+  prem(d) { S.prev.prod.lines.splice(+d.l, 1); render(); },
+  saveProd() {
+    const p = S.prev.prod, date = parseDMY(val('pr_date')); if (!date) { toast('Date should be dd-mm-yyyy', 'bad'); return; }
+    const good = p.lines.filter(l => !l.bad); if (!good.length) { toast('No production lines'); return; }
+    for (const l of good) { if (!l.item) { toast('Match every chainlink item', 'bad'); return; } if (!l.wire) { toast('Pick the wire used (or type none) on every line', 'bad'); return; } if (!/^none$/i.test(l.wire) && !S.byKey[nk(l.wire)]) { toast('Wire "' + l.wire + '" is not in the item list', 'bad'); return; } }
+    const rows = [], ups = [], aliases = []; let n = 0;
+    good.forEach(l => {
+      const it = S.byKey[nk(l.item)], none = /^none$/i.test(l.wire), w = none ? null : S.byKey[nk(l.wire)];
+      if (l.learn) aliases.push({ a: l.raw, i: it.name });
+      rows.push({ k: 'IN', tidSuffix: 'i' + n, date, type: 'Production', item: it.name, qty: l.nos, godown: it.loc, notes: 'Production' });
+      rows.push({ k: 'PROD', tidSuffix: 'p' + n, date, item: it.name, nos: l.nos, per: l.per, total: l.total, sqft: l.sq, wire: none ? 'none' : w.name, wireKg: none ? 0 : l.total });
+      if (w) rows.push({ k: 'OUT', tidSuffix: 'w' + n, date, type: 'Usage', item: w.name, qty: l.total, godown: w.loc, notes: 'Chainlink production: ' + it.name });
+      const wv = none ? 'none' : w.name; if ((it.wire || '') !== wv) { it.wire = wv; ups.push({ name: it.name, wire: wv }); }
+      n++;
+    });
+    const opId = commit(rows, { summary: 'production', itemUpdates: ups, aliases });
+    rows.filter(r => r.k === 'PROD').forEach(r => S.prod.push({ d: r.date, item: r.item, nos: r.nos, per: r.per, total: r.total, sqft: r.sqft, wire: r.wire, wireKg: r.wireKg, t: r.tid }));
+    negWarn(rows.filter(r => r.k === 'OUT').map(r => r.item)); S.prev.prod = null; S.draft.prodText = ''; toast('Production saved'); render();
+  },
+  saveCut() {
+    const date = parseDMY(val('cu_date')), party = val('cu_party').trim(), item = val('cu_item').trim(), q = num(val('cu_qty'));
+    if (!date) { toast('Date should be dd-mm-yyyy', 'bad'); return; } if (!party || !item || !q) { toast('Fill party, item and length', 'bad'); return; }
+    const row = { k: 'CUT', date, party, item, qty: fmt(q) + 'ft' };
+    const opId = commit([row], { summary: 'cut' }); S.cuts.push([date, party, item, row.qty, row.tid]); S.draft.cuParty = ''; S.draft.cuItem = ''; toast('Cut recorded'); render();
+  },
+  saveManual() {
+    const date = parseDMY(val('mn_date')), it = S.byKey[nk(val('mn_item'))], q = num(val('mn_qty'));
+    if (!date) { toast('Date should be dd-mm-yyyy', 'bad'); return; } if (!it) { toast('Pick an item from the list', 'bad'); return; } if (!q || q <= 0) { toast('Enter a quantity', 'bad'); return; }
+    commit([{ k: val('mn_dir'), date, type: val('mn_type'), item: it.name, qty: q, godown: it.loc, notes: val('mn_note').trim() }], { summary: 'manual entry' });
+    negWarn([it.name]); toast('Entry saved'); render();
+  },
+  itemOpen(d) { S.ui.item = d.n; render(); window.scrollTo(0, 0); }, itemClose() { S.ui.item = null; render(); },
+  itemSave(d) {
+    const it = S.byKey[nk(d.n)], wire = val('ip_wire').trim();
+    if (wire && !/^none$/i.test(wire) && !S.byKey[nk(wire)]) { toast('Wire must be an item from the list (or none)', 'bad'); return; }
+    const u = { name: it.name, unit: val('ip_unit'), kgPer: num(val('ip_kg')), low: num(val('ip_low')), high: num(val('ip_high')), wire };
+    Object.assign(it, u, { name: it.name }); queue({ action: 'commit', body: { opId: newOp(), by: S.by, summary: 'item settings', rows: [], itemUpdates: [u] } }); toast('Saved'); render();
+  },
+  saveBy() { S.by = val('s_by').trim(); ls.set('o5_by', S.by); toast('Saved'); },
+  saveCfg() { S.cfg = { waitHrs: num(val('s_w')) || 3, lateHrs: num(val('s_l')) || 8 }; ls.set('o5_cfg', S.cfg); toast('Saved'); },
+  theme(d) { S.theme = d.t; ls.set('o5_theme', d.t); render(); },
+  async ping() { const el = $('#pingres'); el.textContent = 'Checking…'; try { const j = await api('ping'); el.textContent = '✓ Connected · Code.gs v' + j.version; } catch (e) { el.textContent = '⚠ ' + e.message; } },
+  logout() { S.key = ''; ls.set('o5_key', ''); render(); }
+};
+const val_ = id => { const e = document.querySelector('[data-draft="' + id + '"]'); return e ? e.value : ''; };
+function setLineItem(l, name, learnFlag) { l.item = name; l.learn = true; l.check = false; }
+function setProdItem(l, name) { l.item = name; l.learn = true; const it = S.byKey[nk(name)]; if (it && it.wire && !l.wire) l.wire = it.wire; }
+const C = {
+  oinc(d, v, el) { S.prev.orders[+d.o].include = el.checked; render(); },
+  oparty(d, v) { S.prev.orders[+d.o].party = v; }, oveh(d, v) { S.prev.orders[+d.o].vehicle = v; },
+  lpick(d, v) { const l = S.prev.orders[+d.o].lines[+d.l]; const it = S.byKey[nk(v)]; if (it) { setLineItem(l, it.name); l.newItem = null; } else { l.item = null; } render(); },
+  incpick(d, v) { const l = S.prev.inc.lines[+d.l]; const it = S.byKey[nk(v)]; if (it) setLineItem(l, it.name); else l.item = null; render(); },
+  ppick(d, v) { const l = S.prev.prod.lines[+d.l]; const it = S.byKey[nk(v)]; if (it) setProdItem(l, it.name); else l.item = null; render(); },
+  pwire(d, v) { const l = S.prev.prod.lines[+d.l]; const it = S.byKey[nk(v)]; l.wire = it ? it.name : (/^none$/i.test(v.trim()) ? 'none' : v.trim()); render(); },
+  stgo(d, v) { S.stockGo = v; render(); }, stst(d, v) { S.stockSt = v; render(); }
+};
+const I = {
+  ordq(d, v) { S.ordQ = v; const el = $('#ordlist'); if (el) el.innerHTML = ordListHtml(); },
+  stq(d, v) { S.stockQ = v; const el = $('#stlist'); if (el) el.innerHTML = stockTable(); }
+};
+document.addEventListener('click', e => { const el = e.target.closest('[data-act]'); if (!el) return; const f = A[el.dataset.act]; if (f) { e.preventDefault(); f(el.dataset, el, e); } });
+document.addEventListener('change', e => { const el = e.target.closest('[data-chg]'); if (el && C[el.dataset.chg]) C[el.dataset.chg](el.dataset, el.value, el); });
+document.addEventListener('input', e => {
+  const el = e.target; if (!el.dataset) return;
+  if (el.dataset.draft) S.draft[el.dataset.draft] = el.value; if (el.dataset.mask) maskDate(el);
+  if (el.dataset.inp && I[el.dataset.inp]) I[el.dataset.inp](el.dataset, el.value, el);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.dataset && e.target.dataset.enter === 'login') A.login(); });
+setInterval(() => { if (S.key && S.loaded && !S.busy && !flushing && !S.outbox.length && document.visibilityState === 'visible') loadAll(true); }, 120000);
+
+/* ---------------- start ---------------- */
+(function init() {
+  const c = ls.get('o5_cache', null);
+  if (c && S.key) { try { applyData(c); S.loaded = true; } catch (e) {} }
+  render(); if (S.key) { loadAll(S.loaded); flush(); }
+})();
+</script>
+</body>
+</html>
